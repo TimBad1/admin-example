@@ -1,0 +1,39 @@
+@import '../../index.module.scss';
+
+.form {
+    padding: 20px;
+    margin: 30px auto;
+    width: 443px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    &__button {
+        padding: 12px;
+        margin-bottom: var(--mb-form);
+        color: #fff;
+        border: 1px solid var(--color-primary);
+        border-radius: 10px;
+        background-color: var(--color-primary);
+        font-size: 32px;    
+        font-weight: 700;
+    }
+
+    &__input {
+        padding: 16px;
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid var(--color-d9);
+        font-size: 24px;
+        line-height: 1.2em;
+        background-color: var(--color-fa);
+        color: #000;
+        margin-bottom: 20px;
+        font-weight: 700;
+        &::placeholder {
+            color: var(--color-c1);            
+        }
+
+    }
+}
