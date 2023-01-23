@@ -1,0 +1,16 @@
+@import '../../scss/vars.scss';
+@import '../../scss/mixins.scss';
+.main {
+    @include block-container;
+    @include container;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: $fz-x-large;
+}

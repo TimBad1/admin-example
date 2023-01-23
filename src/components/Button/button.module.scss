@@ -1,0 +1,16 @@
+@import '../../scss/vars.scss';
+
+.btn-small {
+    padding: 4px 12px;
+    font-size: $fz-x-small;
+}
+
+.btn-medium {
+    padding: 6px 35px;
+    font-size: $fz-small;
+}
+
+.btn-large {
+    padding: 12px 62px;
+    font-size: $fz-medium;
+}

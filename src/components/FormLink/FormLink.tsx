@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './formlink.module.scss';
 
 interface IFormLink {
@@ -7,6 +6,6 @@ interface IFormLink {
 
 export function FormLink({value}: IFormLink) {
   return (
-    <a className={style.form__link} href="#">{value}</a>
+    <a className={style.link} href="/">{value}</a>
   );
 }

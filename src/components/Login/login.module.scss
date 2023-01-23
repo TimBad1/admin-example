@@ -1,38 +1,35 @@
-@import '../../index.module.scss';
+@import '../../scss/mixins.scss';
+@import '../../scss/vars.scss';
 
 .form {
-    padding: 20px;
-    margin: 30px auto;
+    @include block-container;
+    margin: 0 auto;
     width: 443px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     &__button {
         padding: 12px;
-        margin-bottom: var(--mb-form);
-        color: #fff;
-        border: 1px solid var(--color-primary);
-        border-radius: 10px;
-        background-color: var(--color-primary);
-        font-size: 32px;    
+        margin-bottom: $mb-form;
+        color: $color-white;
+        border: 1px solid $color-primary;
+        border-radius: $br-form;
+        background-color: $color-primary;
+        font-size: $fz-x-large;
         font-weight: 700;
     }
 
     &__input {
         padding: 16px;
         width: 100%;
-        border-radius: 10px;
-        border: 1px solid var(--color-d9);
-        font-size: 24px;
-        line-height: 1.2em;
-        background-color: var(--color-fa);
-        color: #000;
-        margin-bottom: 20px;
+        border-radius: $br-form;
+        border: 1px solid $color-d9;
+        font-size: $fz-large;
+        background-color: $color-fa;
+        color: $color-black;
+        margin-bottom: $mb-form;
         font-weight: 700;
         &::placeholder {
-            color: var(--color-c1);            
+            color: $color-c1;
         }
 
     }

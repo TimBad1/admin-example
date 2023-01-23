@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../..';
+import { RootState } from '../../../store/reducer';
 import styles from './forminput.module.scss';
 
 type TInput = 'email' | 'password';
@@ -12,7 +12,7 @@ interface IFormInput {
 
 export function FormInput({typeInput, placeholder} :IFormInput) {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(useSelector<RootState, string>(state => state.user[typeInput]));
+  const [value, setValue] = useState(useSelector<RootState, string>(state => state.login[typeInput]));
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     console.log('formInput', event.target.value)

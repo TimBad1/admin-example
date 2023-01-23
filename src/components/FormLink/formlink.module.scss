@@ -1,6 +1,7 @@
-.form__link {
+@import '../../scss/vars.scss';
+.link {
     text-decoration: none;
-    color: var(--color-a2);
+    color: $color-a2;
     text-align: center;
     font-weight: 500;
 }

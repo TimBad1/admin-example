@@ -1,0 +1,21 @@
+@import '../../../scss/vars.scss';
+.container {
+    display: flex;
+    align-items: center;
+    gap: 15px
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    background-color: $color-b9;
+    border-radius: 50%;
+}
+
+.title {
+    font-size: $fz-medium;
+}
+
+.descr {
+    font-size: $fz-x-small;
+}
