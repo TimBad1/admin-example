@@ -12,13 +12,6 @@ export function Main() {
       "date_order": "2022-05-15"
     },
     {
-      "id": 1,
-      "number": 1,
-      "email_client": "client1@example.com",
-      "check": 100,
-      "date_order": "2022-05-15"
-    },
-    {
       "id": 2,
       "number": 2,
       "email_client": "client2@example.com",
@@ -103,7 +96,23 @@ export function Main() {
         <h2 className={styles.title}>Заказы</h2>
         <Button name={'По номеру заказа'} size={'medium'}/>
       </div>
-      
+      <table width='100%'>
+        <tr>
+          <td>Номер заказа</td>
+          <td>Email</td>
+          <td>Сумма</td>
+          <td>Дата</td>
+        </tr>
+        {orders.map(order => 
+          <tr key={order.id}>
+            <td align='center'>{order.number}</td>
+            <td>{order.email_client}</td>
+            <td>{order.check}</td>
+            <td>{order.date_order}</td>
+          </tr>
+        )}
+      </table>
+
     </main>
   );
 }
