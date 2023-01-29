@@ -1,32 +1,50 @@
-import { types } from "node-sass";
 import { ActionCreator, Reducer } from "redux";
+
+export type TUserItem = {
+  user_id: number;
+  id: number;
+  number: number;
+  email_client: string;
+  check: number;
+  date_order: Date;
+}
 
 export type TUsers = {
   email: string;
   password: string;
+  name: string;
+  id: number;
 }
 
 export type RootState = {
-    login: {
-      email: string;
-      password: string;
-    }
+    login: TUsers;
     loading: boolean;
-    users?: TUsers[]
+    errorEntry: boolean;
+    orderlist: TUserItem[],
+    paginationCount: number,
+    user_name: string;
   }
   
   const initialState: RootState = {
     login: {
       email: '',
       password: '',
+      name: '',
+      id: 0,
     },
     loading: false,
+    errorEntry: false,
+    orderlist: [],
+    paginationCount: 0,
+    user_name: '',
   }
   
-  // const VERIFICATION = "VERIFICATION";
   const UPDATE_EMAIL = "UPDATE_EMAIL";
   const UPDATE_PASSWORD = "UPDATE_PASSWORD";
+  const UPDATE_NAME = "UPDATE_NAME";
   const LOADING = "LOADING";
+  const ERROR_ENTRY = "ERROR_ENTRY";
+  const UPDATE_ORDERLIST = "UPDATE_ORDERLIST";
   
   type UpdateEmailAction = {
     type: typeof UPDATE_EMAIL;
@@ -48,6 +66,16 @@ export type RootState = {
     text,
   })
 
+  type UpdateNameAction = {
+    type: typeof UPDATE_NAME;
+    text: string;
+  }
+  
+  export const updateName: ActionCreator<UpdateNameAction> = (text) => ({
+    type: UPDATE_NAME,
+    text,
+  })
+
   type LoadingAction = {
     type: typeof LOADING;
   }
@@ -56,11 +84,33 @@ export type RootState = {
     type: LOADING,
   })
 
+  type ErrorEntryAction = {
+    type: typeof ERROR_ENTRY;
+  }
+
+  export const errorEntry: ActionCreator<ErrorEntryAction> = () => ({
+    type: ERROR_ENTRY,
+  })
+
+  type UpdateOrderlist = {
+    type: typeof UPDATE_ORDERLIST;
+    data: TUserItem[];
+  }
+  
+  export const updateOrderlist: ActionCreator<UpdateOrderlist> = (data) => ({
+    type: UPDATE_ORDERLIST,
+    data,
+  })
+
+
+
+
   export const reducer: Reducer = (state = initialState, action) => {
     switch (action.type) {
       case UPDATE_EMAIL:
         return {
           ...state,
+          errorEntry: false,
           login: {
             ...state.login,
             email: action.text,
@@ -69,16 +119,38 @@ export type RootState = {
         case UPDATE_PASSWORD:
           return {
             ...state,
+            errorEntry: false,
             login: {
               ...state.login,
               password: action.text,
             }
           }
+        case UPDATE_NAME:
+          return {
+            ...state,
+            login: {
+              ...state.login,
+              name: action.text,
+            }
+          }
         case LOADING:
           return {
             ...state,
-            loading: true
+            errorEntry: false,
+            loading: true,
           }
+        case ERROR_ENTRY:
+          return {
+            ...state,
+            errorEntry: true,
+          }
+        case UPDATE_ORDERLIST:
+        return {
+          ...state,
+          orderlist: action.data,
+          loading: false
+        }
+
       default:
         return state
     }

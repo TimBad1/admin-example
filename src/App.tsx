@@ -1,17 +1,20 @@
 import { Login } from './components/Login';
-import style from './App.module.scss';
-import { useSelector } from 'react-redux';
+import styles from './App.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store/reducer';
 import { Layout } from './components/Layout';
+import { Loading } from './components/Loading';
+// import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  const users = useSelector<RootState>(state => state.users)
-  console.log(users);
+  const dispatch = useDispatch();
+  const loading = useSelector<RootState, boolean>(state => state.loading);
+  const user_name = useSelector<RootState, string>(state => state.user_name);
   
   return (
-    <div className={style.App}>
-      {users ? <p>vbfdk</p> : <Login /> }
-      <Layout />
+    <div className={styles.App}>
+      {user_name ? <Layout /> : <Login /> }
+      {loading ? <Loading /> : ''}
     </div>
   );
 }

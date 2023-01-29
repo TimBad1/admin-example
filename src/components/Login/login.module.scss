@@ -2,6 +2,7 @@
 @import '../../scss/vars.scss';
 
 .form {
+    position: relative;
     @include block-container;
     margin: 0 auto;
     width: 443px;
@@ -33,4 +34,11 @@
         }
 
     }
+}
+
+.errorDescr {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    color: #F00;
 }

@@ -25,8 +25,6 @@ export function User() {
         <h2 className={styles.title}>{user.name}</h2>
         <p className={styles.descr}>{user.email}</p>
       </div>
-    </div>
-
-    
+    </div>    
   );
 }
