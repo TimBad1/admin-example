@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 // import { useUserList } from '../../functions/useData';
-import { errorEntry, loading, RootState, TUserItem, updateEmail, updateName, updateOrderlist, updatePassword } from '../../store/reducer';
+import { errorEntry, loading, RootState, TUserItem, TUsers, updateEmail, updateName, updateOrderlist, updatePassword } from '../../store/reducer';
 import { FormLink } from '../FormLink';
 import styles from './login.module.scss';
 
@@ -14,14 +14,9 @@ interface ILogin {
 
 export function Login() {
   const dispatch = useDispatch();
-
-  const emailValue = useSelector<RootState, string>(state => state.login.email);
-  const passwordValue = useSelector<RootState, string>(state => state.login.password);
+  const user = useSelector<RootState, TUsers>(state => state.user);
   const errorEntryBool = useSelector<RootState, boolean>(state => state.errorEntry);
-  let user = useSelector<RootState>(state => state.login.name);
-  console.log('user',user);
   
-
   function handleChangeEmail(event: ChangeEvent<HTMLInputElement>) {
     dispatch(updateEmail(event.target.value));
   }
@@ -34,12 +29,12 @@ export function Login() {
     axios
       .get<TUserItem[]>('http://localhost:3000/orders')
       .then(data => {
-          const orderList = data.data.filter(item => item === user);
-          console.log('data',orderList)
+          const orderList = data.data.filter(item => item.user_id === user.id);
+          console.log('orderList useEffect',orderList)
           dispatch(updateOrderlist(orderList))
       }
   )
-},[user])
+},[user.name])
 
   function handleSubmit (event:FormEvent) {
     event.preventDefault(); 
@@ -48,14 +43,16 @@ export function Login() {
       .then(data => {
         const login = data.data;
         const entry = login.find((log: ILogin) => 
-          log.email === emailValue 
-            && log.password === passwordValue)
-        console.log('entry', entry);
-        user = entry.name;
+          log.email === user.email
+            && log.password === user.password)
+        console.log("entry", entry);
+        
+        user.id = entry.id;
+        user.name = entry.name
         
         if(entry) {
           dispatch(loading())
-          dispatch(updateName(user))
+          dispatch(updateName(user.name))
         } else {
           dispatch(errorEntry())
         }
@@ -70,7 +67,7 @@ export function Login() {
         <input 
           className={styles.form__input} 
           type='email'
-          value={emailValue}
+          value={user.email}
           placeholder={'Email'}
           onChange={handleChangeEmail}
         />
@@ -80,7 +77,7 @@ export function Login() {
         <input 
           className={styles.form__input} 
           type='password'
-          value={passwordValue}
+          value={user.password}
           placeholder={'Пароль'}
           onChange={handleChangePassword}
         />

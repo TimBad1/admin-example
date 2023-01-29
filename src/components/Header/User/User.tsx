@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState, TUsers } from '../../../store/reducer';
 import styles from './user.module.scss';
 
 interface IUser {
@@ -8,15 +10,18 @@ interface IUser {
 }
 
 export function User() {
-  const user:IUser = {
-    // img: 'https://i.pinimg.com/236x/74/05/5f/74055f83bfbdc20fdc1f9d1fc116fd26.jpg',
-    name: 'Администратор',
-    email: 'admin@example.com',
-  }
+  const user = useSelector<RootState,TUsers>(state => state.user);
+  console.log('user2', user);
+  
+  // const user:IUser = {
+  //   // img: 'https://i.pinimg.com/236x/74/05/5f/74055f83bfbdc20fdc1f9d1fc116fd26.jpg',
+  //   name: 'Администратор',
+  //   email: 'admin@example.com',
+  // }
   return (
     <div className={styles.container}>
-      { user.img ? (
-        <img className={styles.logo} src={user.img} alt="avatar" />
+      { user.avatar ? (
+        <img className={styles.logo} src={user.avatar} alt="avatar" />
       ) : (
         <div className={styles.logo}></div>
       )}

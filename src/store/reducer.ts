@@ -14,29 +14,30 @@ export type TUsers = {
   password: string;
   name: string;
   id: number;
+  avatar: string;
 }
 
 export type RootState = {
-    login: TUsers;
+    user: TUsers;
     loading: boolean;
     errorEntry: boolean;
     orderlist: TUserItem[],
     paginationCount: number,
-    user_name: string;
   }
   
   const initialState: RootState = {
-    login: {
+    user: {
       email: '',
       password: '',
       name: '',
       id: 0,
+      avatar: '',
     },
     loading: false,
     errorEntry: false,
     orderlist: [],
     paginationCount: 0,
-    user_name: '',
+    // user_name: '',
   }
   
   const UPDATE_EMAIL = "UPDATE_EMAIL";
@@ -111,8 +112,8 @@ export type RootState = {
         return {
           ...state,
           errorEntry: false,
-          login: {
-            ...state.login,
+          user: {
+            ...state.user,
             email: action.text,
           }
         }
@@ -120,16 +121,16 @@ export type RootState = {
           return {
             ...state,
             errorEntry: false,
-            login: {
-              ...state.login,
+            user: {
+              ...state.user,
               password: action.text,
             }
           }
         case UPDATE_NAME:
           return {
             ...state,
-            login: {
-              ...state.login,
+            user: {
+              ...state.user,
               name: action.text,
             }
           }

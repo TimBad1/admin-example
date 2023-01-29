@@ -1,7 +1,7 @@
 import { Login } from './components/Login';
 import styles from './App.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store/reducer';
+import { RootState, TUserItem } from './store/reducer';
 import { Layout } from './components/Layout';
 import { Loading } from './components/Loading';
 // import { Route, Routes } from 'react-router-dom';
@@ -9,11 +9,11 @@ import { Loading } from './components/Loading';
 function App() {
   const dispatch = useDispatch();
   const loading = useSelector<RootState, boolean>(state => state.loading);
-  const user_name = useSelector<RootState, string>(state => state.user_name);
+  const orderlist = useSelector<RootState, TUserItem[]>(state => state.orderlist);
   
   return (
     <div className={styles.App}>
-      {user_name ? <Layout /> : <Login /> }
+      {orderlist.length > 0 ? <Layout /> : <Login /> }
       {loading ? <Loading /> : ''}
     </div>
   );

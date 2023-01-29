@@ -4,7 +4,8 @@
           "id": 1,
           "email": "123@123.23",
           "password": "123",
-          "name": "123"
+          "name": "123",
+          "avatar": "http://android-obzor.com/wp-content/uploads/2022/03/o30524077p_1546914114114_ihsjv-767x1024.jpg"
       },
       {
           "id": 2,
