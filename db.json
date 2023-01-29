@@ -9,7 +9,7 @@
       },
       {
           "id": 2,
-          "email": "ad@m.in",
+          "email": "admin@example.com",
           "password": "admin",
           "name": "Администратор"
       }

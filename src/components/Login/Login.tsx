@@ -30,7 +30,6 @@ export function Login() {
       .get<TUserItem[]>('http://localhost:3000/orders')
       .then(data => {
           const orderList = data.data.filter(item => item.user_id === user.id);
-          console.log('orderList useEffect',orderList)
           dispatch(updateOrderlist(orderList))
       }
   )

@@ -46,6 +46,8 @@ export type RootState = {
   const LOADING = "LOADING";
   const ERROR_ENTRY = "ERROR_ENTRY";
   const UPDATE_ORDERLIST = "UPDATE_ORDERLIST";
+  const LOG_OUT = "LOG_OUT";
+  const COUNTER_LIST = "COUNTER_LIST";
   
   type UpdateEmailAction = {
     type: typeof UPDATE_EMAIL;
@@ -85,6 +87,14 @@ export type RootState = {
     type: LOADING,
   })
 
+  type LogOutAction = {
+    type: typeof LOG_OUT;
+  }
+
+  export const logOut: ActionCreator<LogOutAction> = () => ({
+    type: LOG_OUT,
+  })
+
   type ErrorEntryAction = {
     type: typeof ERROR_ENTRY;
   }
@@ -93,17 +103,29 @@ export type RootState = {
     type: ERROR_ENTRY,
   })
 
-  type UpdateOrderlist = {
+  type UpdateOrderlistAction = {
     type: typeof UPDATE_ORDERLIST;
     data: TUserItem[];
   }
   
-  export const updateOrderlist: ActionCreator<UpdateOrderlist> = (data) => ({
+  export const updateOrderlist: ActionCreator<UpdateOrderlistAction> = (data) => ({
     type: UPDATE_ORDERLIST,
     data,
   })
 
+// updateCountList
+// COUNTER_LIST
 
+
+type UpdateCountListAction = {
+  type: typeof COUNTER_LIST;
+  count: number;
+}
+
+export const updateCountList: ActionCreator<UpdateCountListAction> = (count) => ({
+  type: COUNTER_LIST,
+  count,
+})
 
 
   export const reducer: Reducer = (state = initialState, action) => {
@@ -117,41 +139,58 @@ export type RootState = {
             email: action.text,
           }
         }
-        case UPDATE_PASSWORD:
-          return {
-            ...state,
-            errorEntry: false,
-            user: {
-              ...state.user,
-              password: action.text,
-            }
+      case UPDATE_PASSWORD:
+        return {
+          ...state,
+          errorEntry: false,
+          user: {
+            ...state.user,
+            password: action.text,
           }
-        case UPDATE_NAME:
-          return {
-            ...state,
-            user: {
-              ...state.user,
-              name: action.text,
-            }
+        }
+      case UPDATE_NAME:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            name: action.text,
           }
-        case LOADING:
-          return {
-            ...state,
-            errorEntry: false,
-            loading: true,
-          }
-        case ERROR_ENTRY:
-          return {
-            ...state,
-            errorEntry: true,
-          }
-        case UPDATE_ORDERLIST:
+        }
+      case LOADING:
+        return {
+          ...state,
+          errorEntry: false,
+          loading: true,
+        }
+      case LOG_OUT:
+        return {
+          ...state,
+          orderlist: [],
+          user: {
+            email: '',
+            password: '',
+            name: '',
+            id: 0,
+            avatar: '',
+          },
+          paginationCount: 0,
+        }
+      case ERROR_ENTRY:
+        return {
+          ...state,
+          errorEntry: true,
+        }
+      case UPDATE_ORDERLIST:
         return {
           ...state,
           orderlist: action.data,
-          loading: false
+          loading: false,
         }
-
+      case COUNTER_LIST:
+        return {
+          ...state,
+          paginationCount: 0,
+        }
       default:
         return state
     }

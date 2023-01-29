@@ -7,10 +7,11 @@ type TButton = 'small' | 'medium' | 'large';
 interface IButton {
   name: string;
   size: TButton;
+  onClick: () => void;
 }
-export function Button({name, size}:IButton) {
+export function Button({onClick, name, size}:IButton) {
   return (
-    <button className={classNames(
+    <button onClick={onClick} className={classNames(
       'btn',
       styles[`btn-${size}`]
     )}>{name}</button>
