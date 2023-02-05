@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import { log } from 'console';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, TUserItem, updateCountList } from '../../store/reducer';
+import { RootState, TUserItem } from '../../store/reducer';
+import { updateCountList } from '../../store/actions';
 import { Button } from '../Button';
 import styles from './main.module.scss';
 
 export function Main() {
   const dispatch = useDispatch()
   const datalist = useSelector<RootState, TUserItem[]>(state => state.orderlist);
-  let countList = useSelector<RootState, number>(state => state.paginationCount);
-  let orderlist: TUserItem[] = [];
+  let count = useSelector<RootState, number>(state => state.paginationCount);
+  const [orderlist, setOrderlist] = useState<TUserItem[]>([]);
+  const [sorttype, setSortType] = useState<boolean>(false)
 
   function formatDate(date: Date) {
     let newDate = new Date(date);
@@ -18,30 +21,38 @@ export function Main() {
 
     return `${dd < 10 ? '0' + dd : dd}.${mm < 10 ? '0' + mm : mm}.${yy}`;
   }
-    
+
   useEffect(() => {
-    for(let i = countList * 5; i < (countList + 1) * 5 && i < datalist.length; i++) {
-      console.log("orderlist",orderlist);
-      orderlist = [...orderlist, datalist[i]]
-    }
-  },[countList])
+    const newArr: TUserItem[] = orderlist;
+    for (let i = count * 5; i < (count + 1) * 5 && i < datalist.length; i++) {
+      newArr.push(datalist[i])
+    }    
+    setOrderlist(newArr);
+    console.log(orderlist);
+  }, [count])
+
+  useEffect(() => {
+    const compareCheck = (a: TUserItem, b: TUserItem) => a.check - b.check;
+    const compareNumber = (a: TUserItem, b: TUserItem) => a.number - b.number;
+    sorttype 
+      ? orderlist.sort((compareCheck))
+      : orderlist.sort((compareNumber))
+  }, [sorttype])
 
   function openMore() {    
-    dispatch(updateCountList(countList++))
-    console.log("countList",countList);
-    console.log("orderlist",orderlist);
+    dispatch(updateCountList());
   }
 
+
   function sortList() {
-    console.log('hi');
-    
+    setSortType(!sorttype)
   }
 
   return (
     <main className={styles.main}>
       <div className={styles.menu}>
         <h2 className={styles.title}>Заказы</h2>
-        <Button onClick={sortList} name={'По номеру заказа'} size={'medium'}/>
+        <Button onClick={sortList} name={sorttype ? 'По сумме заказа' : 'По номеру заказа'} size={'medium'}/>
       </div>
       <table className={styles.table}>
         <thead className={styles.row}>

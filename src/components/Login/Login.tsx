@@ -2,7 +2,8 @@ import axios from 'axios';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 // import { useUserList } from '../../functions/useData';
-import { errorEntry, loading, RootState, TUserItem, TUsers, updateEmail, updateName, updateOrderlist, updatePassword } from '../../store/reducer';
+import { RootState, TUserItem, TUsers } from '../../store/reducer';
+import { errorEntry, loading, updateEmail, updateName, updateOrderlist, updatePassword } from '../../store/actions';
 import { FormLink } from '../FormLink';
 import styles from './login.module.scss';
 

@@ -1,6 +1,5 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logOut, RootState } from '../../store/reducer';
+import { logOut } from '../../store/actions';
 import { Button } from '../Button';
 import styles from './header.module.scss';
 import { User } from './User';
