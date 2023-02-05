@@ -11,7 +11,7 @@ export function Main() {
   const datalist = useSelector<RootState, TUserItem[]>(state => state.orderlist);
   let count = useSelector<RootState, number>(state => state.paginationCount);
   const [orderlist, setOrderlist] = useState<TUserItem[]>([]);
-  const [sorttype, setSortType] = useState<boolean>(false)
+  const [sorttype, setSortType] = useState<boolean>(true)
 
   function formatDate(date: Date) {
     let newDate = new Date(date);
@@ -22,30 +22,22 @@ export function Main() {
     return `${dd < 10 ? '0' + dd : dd}.${mm < 10 ? '0' + mm : mm}.${yy}`;
   }
 
-  useEffect(() => {
+  function openMore() {    
     const newArr: TUserItem[] = orderlist;
     for (let i = count * 5; i < (count + 1) * 5 && i < datalist.length; i++) {
       newArr.push(datalist[i])
     }    
     setOrderlist(newArr);
-    console.log(orderlist);
-  }, [count])
+    dispatch(updateCountList());
+  }
 
-  useEffect(() => {
+  function sortList() {
+    setSortType(!sorttype)
     const compareCheck = (a: TUserItem, b: TUserItem) => a.check - b.check;
     const compareNumber = (a: TUserItem, b: TUserItem) => a.number - b.number;
     sorttype 
       ? orderlist.sort((compareCheck))
       : orderlist.sort((compareNumber))
-  }, [sorttype])
-
-  function openMore() {    
-    dispatch(updateCountList());
-  }
-
-
-  function sortList() {
-    setSortType(!sorttype)
   }
 
   return (
@@ -62,7 +54,6 @@ export function Main() {
             <th scope='col'>Сумма</th>
             <th scope='col'>Дата</th>
           </tr>
-          
         </thead>
         <tbody>
           {orderlist.map(order => 
@@ -74,8 +65,8 @@ export function Main() {
             </tr>
           )}
         </tbody>
-        
       </table>
+      
       <div className={styles.buttonWrapper}>
         <Button onClick={openMore} name={'Показать ещё...'} size={'large'}/>  
       </div>

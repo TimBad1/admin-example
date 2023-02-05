@@ -11,13 +11,7 @@ interface IUser {
 
 export function User() {
   const user = useSelector<RootState,TUsers>(state => state.user);
-  console.log('user2', user);
   
-  // const user:IUser = {
-  //   // img: 'https://i.pinimg.com/236x/74/05/5f/74055f83bfbdc20fdc1f9d1fc116fd26.jpg',
-  //   name: 'Администратор',
-  //   email: 'admin@example.com',
-  // }
   return (
     <div className={styles.container}>
       { user.avatar ? (

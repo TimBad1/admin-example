@@ -38,20 +38,17 @@ export function Login() {
 
   function handleSubmit (event:FormEvent) {
     event.preventDefault(); 
+    dispatch(loading())
     axios
       .get('http://localhost:3000/logins')
       .then(data => {
         const login = data.data;
         const entry = login.find((log: ILogin) => 
-          log.email === user.email
-            && log.password === user.password)
-        console.log("entry", entry);
-        
-        user.id = entry.id;
-        user.name = entry.name
-        
+          log.email === user.email && log.password === user.password)
+      
         if(entry) {
-          dispatch(loading())
+          user.id = entry.id;
+          user.name = entry.name
           dispatch(updateName(user.name))
         } else {
           dispatch(errorEntry())

@@ -1,4 +1,4 @@
-import { ActionCreator, Reducer } from "redux";
+import { Reducer } from "redux";
 import { UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_NAME, LOADING, LOG_OUT, ERROR_ENTRY, UPDATE_ORDERLIST, COUNTER_LIST } from "./actions";
 
 export type TUserItem = {
@@ -92,6 +92,7 @@ export type RootState = {
         return {
           ...state,
           errorEntry: true,
+          loading: false,
         }
       case UPDATE_ORDERLIST:
         return {
