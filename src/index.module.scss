@@ -26,14 +26,6 @@ a {
   cursor: pointer;  
 }
 
-button {
-  background-color: $color-f7;
-  color: $color-59;
-  border-radius: 10px;
-  border: 1px solid $color-f7;
-  font-weight: 700;
-}
-
 @media screen and (min-width: 800px) {
   body {
     padding: 30px;

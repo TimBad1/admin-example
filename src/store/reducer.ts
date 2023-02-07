@@ -1,13 +1,27 @@
 import { Reducer } from "redux";
-import { UPDATE_EMAIL, UPDATE_PASSWORD, UPDATE_NAME, LOADING, LOG_OUT, ERROR_ENTRY, UPDATE_ORDERLIST, COUNTER_LIST } from "./actions";
+import {  UPDATE_EMAIL, 
+          UPDATE_PASSWORD, 
+          UPDATE_NAME, 
+          LOADING, 
+          LOG_OUT, 
+          ERROR_ENTRY, 
+          UPDATE_ORDERLIST, 
+          COUNTER_LIST 
+        } from "./actions";
 
-export type TUserItem = {
-  user_id: number;
+export type TListItems = {
   id: number;
   number: number;
   email_client: string;
   check: number;
   date_order: Date;
+}
+
+export type TUserItem = {
+  user_id: number;
+  list: [
+    TListItems[]
+  ]
 }
 
 export type TUsers = {
@@ -22,7 +36,7 @@ export type RootState = {
     user: TUsers;
     loading: boolean;
     errorEntry: boolean;
-    orderlist: TUserItem[],
+    orderlist: TListItems[],
     paginationCount: number,
   }
   
@@ -103,7 +117,7 @@ export type RootState = {
       case COUNTER_LIST:
         return {
           ...state,
-          paginationCount: state.paginationCount + 1,
+          paginationCount: action.paginationCount,
         }
       default:
         return state

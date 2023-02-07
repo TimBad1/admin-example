@@ -11,5 +11,20 @@
 @mixin container {
     max-width: 800px;
     margin: 0 auto;
-
 }
+
+@mixin button {
+    background-color: $color-f7;
+    color: $color-59;
+    border-radius: 10px;
+    border: 1px solid $color-f7;
+    font-weight: 700;
+    transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: rgba( $color-f7, 0.4);
+        border-color: $color-a2;
+        outline: none;
+    }
+  }

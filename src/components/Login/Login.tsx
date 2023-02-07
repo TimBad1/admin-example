@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-// import { useUserList } from '../../functions/useData';
 import { RootState, TUserItem, TUsers } from '../../store/reducer';
 import { errorEntry, loading, updateEmail, updateName, updateOrderlist, updatePassword } from '../../store/actions';
 import { FormLink } from '../FormLink';
 import styles from './login.module.scss';
+import { SERVER } from '../../_vars';
 
 interface ILogin {
   email: string;
@@ -28,19 +28,19 @@ export function Login() {
 
   useEffect(() => {
     axios
-      .get<TUserItem[]>('http://localhost:3000/orders')
+      .get<TUserItem[]>(`${SERVER}orders`)
       .then(data => {
           const orderList = data.data.filter(item => item.user_id === user.id);
-          dispatch(updateOrderlist(orderList))
+          dispatch(updateOrderlist(orderList.length ? orderList[0].list[0] : []))
       }
-  )
-},[user.name])
+    )
+  },[user.name])
 
   function handleSubmit (event:FormEvent) {
     event.preventDefault(); 
     dispatch(loading())
     axios
-      .get('http://localhost:3000/logins')
+      .get(`${SERVER}logins`)
       .then(data => {
         const login = data.data;
         const entry = login.find((log: ILogin) => 

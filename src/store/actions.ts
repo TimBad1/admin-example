@@ -76,8 +76,10 @@ export const updateOrderlist: ActionCreator<UpdateOrderlistAction> = (data) => (
 
 type UpdateCountListAction = {
   type: typeof COUNTER_LIST;
+  paginationCount: number;
 }
 
-export const updateCountList: ActionCreator<UpdateCountListAction> = () => ({
+export const updateCountList: ActionCreator<UpdateCountListAction> = (paginationCount) => ({
   type: COUNTER_LIST,
+  paginationCount,
 })

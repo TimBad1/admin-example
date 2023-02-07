@@ -1,16 +1,17 @@
-import { log } from 'console';
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, TUserItem } from '../../store/reducer';
-import { updateCountList } from '../../store/actions';
+import { updateCountList, updateOrderlist } from '../../store/actions';
+import { RootState, TListItems, TUserItem } from '../../store/reducer';
+import { SERVER } from '../../_vars';
 import { Button } from '../Button';
 import styles from './main.module.scss';
 
 export function Main() {
   const dispatch = useDispatch()
-  const datalist = useSelector<RootState, TUserItem[]>(state => state.orderlist);
+  const datalist = useSelector<RootState, TListItems[]>(state => state.orderlist);
   let count = useSelector<RootState, number>(state => state.paginationCount);
-  const [orderlist, setOrderlist] = useState<TUserItem[]>([]);
+  const userId = useSelector<RootState>(state => state.user.id);
   const [sorttype, setSortType] = useState<boolean>(true)
 
   function formatDate(date: Date) {
@@ -23,23 +24,31 @@ export function Main() {
   }
 
   function openMore() {    
-    const newArr: TUserItem[] = orderlist;
-    for (let i = count * 5; i < (count + 1) * 5 && i < datalist.length; i++) {
-      newArr.push(datalist[i])
-    }    
-    setOrderlist(newArr);
-    dispatch(updateCountList());
+    axios
+    .get<TUserItem[]>(`${SERVER}orders?user_id=${userId}`)
+    .then(data => {
+      if (count < data.data[0].list.length - 1) {
+        count++;
+        const newlist = [...datalist, ...data.data[0].list[count]];
+        dispatch(updateCountList(count));
+        dispatch(updateOrderlist(newlist))
+      } else {
+        
+      }
+    }
+  )
+
   }
 
   function sortList() {
     setSortType(!sorttype)
-    const compareCheck = (a: TUserItem, b: TUserItem) => a.check - b.check;
-    const compareNumber = (a: TUserItem, b: TUserItem) => a.number - b.number;
+    const compareCheck = (a: TListItems, b: TListItems) => a.check - b.check;
+    const compareNumber = (a: TListItems, b: TListItems) => a.number - b.number;
     sorttype 
-      ? orderlist.sort((compareCheck))
-      : orderlist.sort((compareNumber))
+      ? datalist.sort((compareCheck))
+      : datalist.sort((compareNumber))
   }
-
+  
   return (
     <main className={styles.main}>
       <div className={styles.menu}>
@@ -47,8 +56,8 @@ export function Main() {
         <Button onClick={sortList} name={sorttype ? 'По сумме заказа' : 'По номеру заказа'} size={'medium'}/>
       </div>
       <table className={styles.table}>
-        <thead className={styles.row}>
-          <tr>
+        <thead>
+          <tr className={styles.row}>
             <th scope='col'>Номер заказа</th>
             <th scope='col'>Email</th>
             <th scope='col'>Сумма</th>
@@ -56,7 +65,7 @@ export function Main() {
           </tr>
         </thead>
         <tbody>
-          {orderlist.map(order => 
+          {datalist.map(order => 
             <tr key={order.id} className={styles.row}>
               <td>{order.number}</td>
               <td>{order.email_client}</td>

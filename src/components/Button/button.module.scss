@@ -1,16 +1,20 @@
 @import '../../scss/vars.scss';
+@import '../../scss/mixins.scss';
 
 .btn-small {
+    @include button;
     padding: 4px 12px;
     font-size: $fz-x-small;
 }
 
 .btn-medium {
+    @include button;
     padding: 6px 35px;
     font-size: $fz-small;
 }
 
 .btn-large {
+    @include button;
     padding: 12px 62px;
     font-size: $fz-medium;
 }
